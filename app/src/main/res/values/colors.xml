@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="black">#FF000000</color>
+    <color name="grey">#ccdeed</color>
+    <color name="dark_grey">#a7cfaf</color>
+    <color name="light_blue">#5aaef2</color>
+    <color name="colorBlack">#141414</color>
+    <color name="colorBrown">#5A5555</color>
+    <color name="colorWhite">#FFFFFF</color>
+    <color name="colorGreen">#2fa881</color>
+    <color name="colorYellow">#FFCC00</color>
+    <color name="colorCustomGrey">#c5c5c5</color>
+    <color name="colorCardView">#f7f7f7</color>
+    <color name="colorIndivateTab">#FFFFFF</color>
+    <color name="transparent">#00000000</color>
+    <color name="grey_200">#EEEEEE</color>
+    <color name="grey_500">#a4a4a4</color>
+    <color name="grey_100">#F5F5F5</color>
+    <color name="grey_800">#212121</color>
+    <color name="colorRed">#FD0606</color>
+    <color name="colorFadeBlack">#313131</color>
+    <color name="colorBlue">#157AD9</color>
+    <color name="colorLightBlue">#60C0FF</color>
+    <color name="chat_box_left">#08B0E4</color>
+    <color name="chat_box_right">#d2fad5</color>
+    <color name="colorDark">#142A3B</color>
+    <color name="colorWhiteFade">#F1F6FB</color>
+    <color name="colorWhiteFade2">#ECEEF1</color>
+    <color name="colorDarkGray">#a2a2a2</color>
+</resources>
