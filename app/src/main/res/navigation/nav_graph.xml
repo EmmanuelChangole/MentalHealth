@@ -12,7 +12,14 @@
         tools:layout="@layout/fragment_login" >
         <action
             android:id="@+id/action_loginFragment2_to_itemFragment"
-            app:destination="@id/itemFragment" />
+            app:destination="@id/itemFragment"
+            app:popUpTo="@id/loginFragment2"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_loginFragment2_to_errorFragment"
+            app:destination="@id/errorFragment"
+            app:popUpTo="@id/loginFragment2"
+            app:popUpToInclusive="false" />
 
 
     </fragment>
@@ -31,4 +38,13 @@
         android:name="com.example.mentalhealthapp.DetailsFragment"
         android:label="fragment_details"
         tools:layout="@layout/fragment_details" />
+    <fragment
+        android:id="@+id/errorFragment"
+        android:name="com.example.mentalhealthapp.ErrorFragment"
+        android:label="fragment_error"
+        tools:layout="@layout/fragment_error" />
+    <fragment
+        android:id="@+id/aboutFragment"
+        android:name="com.example.mentalhealthapp.AboutFragment"
+        android:label="AboutFragment" />
 </navigation>
