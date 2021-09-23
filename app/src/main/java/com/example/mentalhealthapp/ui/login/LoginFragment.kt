@@ -7,9 +7,6 @@ import androidx.fragment.app.Fragment
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.widget.Button
 import android.widget.EditText
@@ -22,8 +19,8 @@ import com.example.mentalhealthapp.R
 import androidx.appcompat.app.AppCompatActivity
 
 import android.R.string.no
-
-
+import android.view.*
+import androidx.navigation.ui.NavigationUI
 
 
 class LoginFragment : Fragment() {
@@ -44,11 +41,23 @@ class LoginFragment : Fragment() {
         _binding = FragmentLoginBinding.inflate(inflater, container, false)
         return binding.root
 
+
+    }
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.main_menu,menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        //navigate to the Fragment that has the same id as the selected menu item
+        return NavigationUI.
+        onNavDestinationSelected(item,requireView().findNavController())
+                || super.onOptionsItemSelected(item)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        (activity as AppCompatActivity?)!!.supportActionBar!!.hide()
+      //  (activity as AppCompatActivity?)!!.supportActionBar!!.show()
         loginViewModel = ViewModelProvider(this, LoginViewModelFactory())
             .get(LoginViewModel::class.java)
 
@@ -113,9 +122,13 @@ class LoginFragment : Fragment() {
 
         loginButton.setOnClickListener {
 
-                view : View ->
-            view.findNavController().navigate(R.id.action_loginFragment2_to_itemFragment);
 
+            if (usernameEditText.text.toString()== passwordEditText.text.toString()) {
+                view.findNavController().navigate(R.id.action_loginFragment2_to_itemFragment)
+
+            } else {
+                view.findNavController().navigate(R.id.action_loginFragment2_to_errorFragment)
+            }
 
             /*loadingProgressBar.visibility = View.VISIBLE
             loginViewModel.login(
