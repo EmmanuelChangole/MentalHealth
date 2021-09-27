@@ -32,7 +32,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
-                android:layout_marginTop="10dp">
+                style="@style/marginTop">
 
                 <View
                     android:layout_width="8dp"
@@ -61,11 +61,8 @@
                 android:layout_height="50dp"
                 android:orientation="horizontal"
                 android:layout_marginTop="10dp"
-                android:layout_marginStart="30dp"
-                android:layout_marginLeft="30dp"
-                android:layout_marginEnd="30dp"
 
-                >
+                style="@style/margin">
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -75,11 +72,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/hintUserName"
-                        android:textSize="13sp"
-                        android:paddingBottom="2dp"
                         android:background="@null"
 
-                        />
+                        style="@style/paddingBottom" />
 
                 </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
@@ -124,14 +119,25 @@
                 >
                 <Button
                     android:background="@color/colorGreen"
-                    android:id="@+id/login"
-                    android:layout_width="150dp"
-                    android:layout_height="50dp"
+                    android:id="@+id/butLogin"
+                    android:layout_width="100dp"
+                    android:layout_height="60dp"
                     android:textColor="@color/colorWhite"
                     android:text="@string/butDone"
                     />
+                <Button
+                    android:background="@color/colorGreen"
+                    android:layout_marginLeft="20dp"
+                    android:id="@+id/login"
+                    android:layout_width="100dp"
+                    android:layout_height="60dp"
+                    android:textColor="@color/colorWhite"
+                    android:text="@string/butLogin"
+                    />
+
 
             </LinearLayout>
+
             <ProgressBar
                 android:id="@+id/loading"
                 android:layout_width="wrap_content"

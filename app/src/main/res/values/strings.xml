@@ -28,4 +28,5 @@
     <string name="contact_us">Contact us</string>
     <string name="error">Oops! invalid Username and Password</string>
     <string name="about_us">Welcome to mental health version 1.0 ,Having mental issue worry no more cause we got you.</string>
+    <string name="butLogin">use google</string>
 </resources>
