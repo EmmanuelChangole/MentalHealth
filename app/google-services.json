@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "4549186816",
+    "project_id": "decent-envoy-323808",
+    "storage_bucket": "decent-envoy-323808.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:4549186816:android:4e9eb68cfd219a61758fe5",
+        "android_client_info": {
+          "package_name": "com.example.mentalhealthapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "4549186816-4b9acop3lfhrphskqipq9t1npj4ffdis.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.mentalhealthapp",
+            "certificate_hash": "7c68b06b6ee925cee5fd789c98d483c90d5fbfab"
+          }
+        },
+        {
+          "client_id": "4549186816-sn9fuvisjefmec25fmcs2a55id0hk9b8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyANCRD-PAYlRPqS_cPcQ27XVUT20tNE1ME"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "4549186816-sn9fuvisjefmec25fmcs2a55id0hk9b8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

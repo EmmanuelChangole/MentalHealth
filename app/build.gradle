@@ -53,7 +53,9 @@ dependencies {
     //Navigation dependencies
     implementation "androidx.navigation:navigation-fragment-ktx:$navigationVersion"
     implementation "androidx.navigation:navigation-ui-ktx:$navigationVersion"
-
-
+    //firebase dependencies
+    implementation 'com.firebaseui:firebase-ui-auth:5.0.0'
 
 }
+
+apply plugin: 'com.google.gms.google-services'
