@@ -122,6 +122,7 @@ class LoginFragment : Fragment() {
         val passwordEditText = binding.password
         val loginButton = binding.login
         val loadingProgressBar = binding.loading
+        val butLogin=binding.butLogin
 
         loginViewModel.loginFormState.observe(viewLifecycleOwner,
             Observer { loginFormState ->
@@ -193,6 +194,18 @@ class LoginFragment : Fragment() {
                 passwordEditText.text.toString()
             )*/
         }
+        butLogin.setOnClickListener {  if (usernameEditText.text.toString()== passwordEditText.text.toString()) {
+            view.findNavController().navigate(R.id.action_loginFragment2_to_itemFragment)
+
+        } else {
+            view.findNavController().navigate(R.id.action_loginFragment2_to_errorFragment)
+        }
+
+            /*loadingProgressBar.visibility = View.VISIBLE
+            loginViewModel.login(
+                usernameEditText.text.toString(),
+                passwordEditText.text.toString()
+            )*/ }
     }
 
     private fun updateUiWithUser(model: LoggedInUserView) {
