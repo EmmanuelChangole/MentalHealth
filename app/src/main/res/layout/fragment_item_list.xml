@@ -1,9 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.recyclerview.widget.RecyclerView
-    android:background="@color/grey"
-    android:id="@+id/list_recycler_view"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="disorderViewModel"
+            type="com.example.mentalhealthapp.viewmodel.DisorderViewModel" />
 
-</androidx.recyclerview.widget.RecyclerView>
+    </data>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:background="@color/grey"
+        android:id="@+id/list_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+</layout>
