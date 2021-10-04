@@ -50,8 +50,7 @@
                     android:layout_marginLeft="50dp"
                     android:textColor="@color/colorYellow"
                     android:text="@string/tvLogin"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
+                    android:textAppearance="@style/AndroidTextAppearance"
                     />
 
             </RelativeLayout>

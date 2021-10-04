@@ -38,13 +38,7 @@ class DisorderViewModel(
         }
 
 
-
-
-
-
-
     }
-
 
     fun getAllDisorder():LiveData<List<Disorder>>
     {

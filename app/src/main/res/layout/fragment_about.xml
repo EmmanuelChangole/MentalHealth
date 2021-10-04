@@ -19,11 +19,12 @@
         <TextView
             android:textColor="@color/colorGreen"
             android:layout_centerInParent="true"
-            android:textSize="20dp"
             android:padding="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/about_us" />
+            android:text="@string/about_us"
+            android:textAppearance="@style/AndroidTextAppearance"
+            />
     </androidx.cardview.widget.CardView>
 
 
