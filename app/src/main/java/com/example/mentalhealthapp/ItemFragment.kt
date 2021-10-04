@@ -33,7 +33,6 @@ class ItemFragment : Fragment() {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
 
-
         retainInstance = true
     }
 

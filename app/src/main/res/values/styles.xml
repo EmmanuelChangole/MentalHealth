@@ -17,5 +17,7 @@
 
     <style name="paddingBottom" parent="textSize">
         <item name="android:paddingBottom">2dp</item>
+
     </style>
+
 </resources>
