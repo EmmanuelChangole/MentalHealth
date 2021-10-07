@@ -29,4 +29,9 @@
     <string name="error">Oops! invalid Username and Password</string>
     <string name="about_us">Welcome to mental health version 1.0 ,Having mental issue worry no more cause we got you.</string>
     <string name="butLogin">use google</string>
+    <string name="notification_channel_id">mental_health</string>
+    <string name="notification_title">Welcome to mental health.</string>
+    <string name="snooze">snooze</string>
+    <string name="ready">Ready</string>
+    <string name="notification_channel_description">Notification description</string>
 </resources>
