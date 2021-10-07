@@ -19,14 +19,20 @@ import com.example.mentalhealthapp.R
 import androidx.appcompat.app.AppCompatActivity
 
 import android.R.string.no
-import android.app.Activity
+import android.app.*
+import android.content.Context
 import android.content.Intent
+import android.graphics.Color
+import android.os.Build
 import android.util.Log
 import android.view.*
 import androidx.annotation.IntegerRes
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.ui.NavigationUI
+import com.example.mentalhealthapp.receiver.AlarmReceiver
+import com.example.mentalhealthapp.utils.sendNotification
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.IdpResponse
 import com.google.firebase.auth.FirebaseAuth
@@ -59,6 +65,13 @@ class LoginFragment : Fragment() {
 
         _binding = FragmentLoginBinding.inflate(inflater, container, false)
         _binding!!.login.setOnClickListener{launchSignInFLow()}
+
+        createChannel(
+            getString(R.string.notification_channel_id),
+            getString(R.string.notification_title)
+        )
+
+
         return binding.root
 
 
@@ -179,6 +192,7 @@ class LoginFragment : Fragment() {
         }
 
         loginButton.setOnClickListener {
+
          launchSignInFLow()
 /*
             if (usernameEditText.text.toString()== passwordEditText.text.toString()) {
@@ -194,7 +208,20 @@ class LoginFragment : Fragment() {
                 passwordEditText.text.toString()
             )*/
         }
-        butLogin.setOnClickListener {  if (usernameEditText.text.toString()== passwordEditText.text.toString()) {
+        butLogin.setOnClickListener {  if (usernameEditText.text.toString()== passwordEditText.text.toString())
+        {
+
+            val notificationManager = ContextCompat.getSystemService(
+                requireContext(),
+                NotificationManager::class.java
+            ) as NotificationManager
+
+            notificationManager.sendNotification(
+                requireContext().getText(R.string.ready).toString(),
+                requireContext()
+            )
+
+
             view.findNavController().navigate(R.id.action_loginFragment2_to_itemFragment)
 
         } else {
@@ -206,6 +233,31 @@ class LoginFragment : Fragment() {
                 usernameEditText.text.toString(),
                 passwordEditText.text.toString()
             )*/ }
+    }
+
+    private fun createChannel(channelId: String, channelName: String) {
+        // TODO: Step 1.6 START create a channel
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val notificationChannel = NotificationChannel(
+                channelId,
+                channelName,
+                NotificationManager.IMPORTANCE_HIGH
+            ).apply {
+                    setShowBadge(false)
+                }
+
+            notificationChannel.enableLights(true)
+            notificationChannel.lightColor = Color.RED
+            notificationChannel.enableVibration(true)
+            notificationChannel.description = getString(R.string.notification_channel_description)
+
+            val notificationManager = requireActivity().getSystemService(
+                NotificationManager::class.java
+            )
+            notificationManager.createNotificationChannel(notificationChannel)
+
+        }
+        // TODO: Step 1.6 END create a channel
     }
 
     private fun updateUiWithUser(model: LoggedInUserView) {
