@@ -2,9 +2,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:icon="@drawable/ic_baseline_add_24"
-        android:title="@string/register" />
-    <item
         android:icon="@drawable/ic_find"
         android:title="@string/find_doctor" />
     <item

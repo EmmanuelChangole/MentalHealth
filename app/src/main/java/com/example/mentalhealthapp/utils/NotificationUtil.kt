@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.BitmapFactory
 import androidx.core.app.NotificationCompat
+import com.example.mentalhealthapp.ItemFragment
 import com.example.mentalhealthapp.MainActivity
 import com.example.mentalhealthapp.R
 import com.example.mentalhealthapp.receiver.SnoozeReceiver
@@ -18,6 +19,7 @@ private val FLAGS = 0
 fun NotificationManager.sendNotification(messageBody: String, applicationContext: Context)
 {
     val contentIntent = Intent(applicationContext, MainActivity::class.java)
+    contentIntent.putExtra(Constants.MOOD,true)
     val contentPendingIntent = PendingIntent.getActivity(
         applicationContext,
         NOTIFICATION_ID,
@@ -50,6 +52,8 @@ fun NotificationManager.sendNotification(messageBody: String, applicationContext
         .setAutoCancel(true)
         .setStyle(bigPicStyle)
         .setLargeIcon(iconImage)
-        .setPriority(NotificationCompat.PRIORITY_HIGH)
+        .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+        .setContentIntent(contentPendingIntent)
+        .setAutoCancel(true)
         notify(NOTIFICATION_ID, builder.build())
 }
