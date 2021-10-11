@@ -10,10 +10,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MentalHealthApp">
         <activity
+            android:name=".LoginActivity" android:theme="@style/Theme.MentalHealthApp"
+            android:exported="true" />
+        <activity
             android:name=".DetailsActivity"
             android:exported="true" />
         <activity
-            android:name=".MainActivity"
+            android:name=".MainActivity" android:theme="@style/Theme.MentalHealthApp"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -11,7 +11,7 @@
     <string name="login_failed">"Login failed"</string>
     <string name="description">description</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="hello_blank_fragment">Search Fragment</string>
     <string name="title">Title</string>
     <string name="details">Details not yet implemented</string>
     <string name="tvLogin">Login</string>
@@ -30,8 +30,17 @@
     <string name="about_us">Welcome to mental health version 1.0 ,Having mental issue worry no more cause we got you.</string>
     <string name="butLogin">use google</string>
     <string name="notification_channel_id">mental_health</string>
-    <string name="notification_title">Welcome to mental health.</string>
+    <string name="notification_title">Tell us,how are you feeling?.</string>
     <string name="snooze">snooze</string>
-    <string name="ready">Ready</string>
+    <string name="ready">We are here for you.</string>
     <string name="notification_channel_description">Notification description</string>
+    <string name="menu_home">Home</string>
+    <string name="menu_search">Search</string>
+    <string name="MAIN_ACTIVITY">main</string>
+    <string name="intro_slide1_header">Welcome to Mental health care</string>
+    <string name="intro_slide1_body">Let us take care of your mental health</string>
+    <string name="intro_slide3_header">Keep track of your health</string>
+    <string name="intro_slide3_body">Access your daily mental health record</string>
+    <string name="intro_slide2_header">Get connected with friends</string>
+    <string name="intro_slide2_body">Know how your friends are feeling</string>
 </resources>

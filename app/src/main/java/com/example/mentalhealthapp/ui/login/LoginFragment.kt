@@ -87,7 +87,7 @@ class LoginFragment : Fragment() {
         startActivityForResult(
             AuthUI.getInstance().createSignInIntentBuilder().setAvailableProviders(
                 providers
-            ).build(), SIGN_IN_RESULT_CODE
+            ).setTheme(R.style.GreenTheme).build(), SIGN_IN_RESULT_CODE
         )
     }
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -101,6 +101,8 @@ class LoginFragment : Fragment() {
                     "Successfully signed in user " +
                             "${FirebaseAuth.getInstance().currentUser?.displayName}!"
                 )
+
+                //start main activity
 
                 requireView().findNavController().navigate(R.id.action_loginFragment2_to_itemFragment)
 
@@ -211,15 +213,8 @@ class LoginFragment : Fragment() {
         butLogin.setOnClickListener {  if (usernameEditText.text.toString()== passwordEditText.text.toString())
         {
 
-            val notificationManager = ContextCompat.getSystemService(
-                requireContext(),
-                NotificationManager::class.java
-            ) as NotificationManager
 
-            notificationManager.sendNotification(
-                requireContext().getText(R.string.ready).toString(),
-                requireContext()
-            )
+
 
 
             view.findNavController().navigate(R.id.action_loginFragment2_to_itemFragment)

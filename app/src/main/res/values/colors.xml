@@ -29,4 +29,23 @@
     <color name="colorWhiteFade">#F1F6FB</color>
     <color name="colorWhiteFade2">#ECEEF1</color>
     <color name="colorDarkGray">#a2a2a2</color>
+    <color name="material_green_50">#E8F5E9</color>
+    <color name="material_green_500">#4CAF50</color>
+    <color name="material_green_700">#388E3C</color>
+    <color name="material_purple_a700">#AA00FF</color>
+    <!-- BottomNavigationView colors -->
+    <color name="colorBottomNavActive">#20A0EE</color>
+    <color name="colorBottomNavInactive">#45535D</color>
+    <color name="colorBottomNavBackground">#16202A</color>
+    <color name="colorBottomNavSeparator">#45535D</color>
+    <!-- Intro slides colors -->
+    <color name="colorIntroSlideHeader">#FFFFFF</color>
+    <color name="colorIntroSlideBody">#FFFFFF</color>
+    <color name="colorIntroSlide1Background">#343434</color>
+    <color name="colorIntroSlide2Background">#3B6DB2</color>
+    <color name="colorIntroSlide3Background">#CC8A2D</color>
+    <color name="colorIntroSlide4Background">#1C4E3B</color>
+    <color name="colorIntroSlide5Background">#A82222</color>
+    <color name="colorIntroSlide6Background">#318D9A</color>
+
 </resources>

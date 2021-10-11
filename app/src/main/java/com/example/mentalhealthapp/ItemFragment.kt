@@ -1,11 +1,16 @@
 package com.example.mentalhealthapp
 
+import android.app.AlertDialog
+import android.app.NotificationManager
+import android.content.DialogInterface
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.Observable
 import androidx.fragment.app.viewModels
@@ -15,9 +20,11 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.NavigationUI
 import com.example.mentalhealthapp.databinding.FragmentItemListBinding
 import com.example.mentalhealthapp.db.DisorderDatabase
+import com.example.mentalhealthapp.utils.sendNotification
 import com.example.mentalhealthapp.utils.subscribeOnBackground
 import com.example.mentalhealthapp.viewmodel.DisorderViewModel
 import com.example.mentalhealthapp.viewmodel.DisorderViewModelFactory
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.android.synthetic.main.fragment_item_list.*
 
 /**
@@ -28,6 +35,8 @@ class ItemFragment : Fragment() {
     private lateinit var disorderViewModel: DisorderViewModel
     private lateinit var adapter :MyItemRecyclerViewAdapter
     val TAG= ItemFragment::class.java.simpleName as String
+    private lateinit var fab:FloatingActionButton
+    private val MOOD_PARAMETER="ItemFragmentMood"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,6 +63,12 @@ class ItemFragment : Fragment() {
     {
         val binding: FragmentItemListBinding = DataBindingUtil.inflate(
             inflater, R.layout.fragment_item_list, container, false)
+        fab=binding.fab
+        fab.setOnClickListener(View.OnClickListener
+        {
+
+            Toast.makeText(this.context,"Whats on your mind? not yet implemented",Toast.LENGTH_SHORT).show()
+        })
         val application = requireNotNull(this.activity).application
         val dataSource = DisorderDatabase.getInstance(application).disorderDatabaseDao
         val viewModelFactory = DisorderViewModelFactory(dataSource, application)
@@ -67,9 +82,25 @@ class ItemFragment : Fragment() {
         return   binding.root;
 
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+        val notificationManager = ContextCompat.getSystemService(
+            requireContext(),
+            NotificationManager::class.java
+        ) as NotificationManager
+
+        notificationManager.sendNotification(
+            requireContext().getText(R.string.ready).toString(),
+            requireContext()
+        )
 
 
     }
+
+
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         (activity as AppCompatActivity?)!!.supportActionBar!!.show()
@@ -91,3 +122,5 @@ class ItemFragment : Fragment() {
 
     }
 }
+
+
