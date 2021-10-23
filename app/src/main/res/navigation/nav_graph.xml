@@ -26,7 +26,7 @@
 
     <fragment
         android:id="@+id/itemFragment"
-        android:name="com.example.mentalhealthapp.ItemFragment"
+        android:name="com.example.mentalhealthapp.HomeFragment"
         android:label="fragment_item_list"
         tools:layout="@layout/fragment_item_list" >
         <action

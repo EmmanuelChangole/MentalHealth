@@ -24,7 +24,8 @@ class MyItemRecyclerViewAdapter(
         val currentItem=getItem(position)
         holder.bind(currentItem)
         holder.itemView.setOnClickListener{
-             //   view : View ->
+             //
+        //   view : View ->
          //   view.findNavController().navigate(R.id.action_itemFragment_to_detailsFragment)
         }
     }

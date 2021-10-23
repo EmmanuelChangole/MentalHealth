@@ -34,7 +34,7 @@
           android:layout_gravity="start"
           app:menu="@menu/bottom_nav_menu"
           app:labelVisibilityMode="unlabeled"
-          app:itemIconTint="@color/colorWhite"
+          app:itemIconTint="@drawable/selector"
           app:itemTextColor="@color/colorBottomNavInactive"
           app:itemBackground="@color/material_green_700"
           tools:layout_editor_absoluteX="0dp"/>

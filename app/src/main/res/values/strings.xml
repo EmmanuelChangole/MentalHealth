@@ -43,4 +43,6 @@
     <string name="intro_slide3_body">Access your daily mental health record</string>
     <string name="intro_slide2_header">Get connected with friends</string>
     <string name="intro_slide2_body">Know how your friends are feeling</string>
+    <string name="profile_fragment">Profile Fragment</string>
+    <string name="stats_fragment">Statistics Fragment</string>
 </resources>

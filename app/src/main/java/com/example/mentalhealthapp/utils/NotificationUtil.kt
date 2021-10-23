@@ -6,7 +6,6 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.BitmapFactory
 import androidx.core.app.NotificationCompat
-import com.example.mentalhealthapp.ItemFragment
 import com.example.mentalhealthapp.MainActivity
 import com.example.mentalhealthapp.R
 import com.example.mentalhealthapp.receiver.SnoozeReceiver

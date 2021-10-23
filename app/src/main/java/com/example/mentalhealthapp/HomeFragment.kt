@@ -1,10 +1,7 @@
 package com.example.mentalhealthapp
 
-import android.app.AlertDialog
 import android.app.NotificationManager
-import android.content.DialogInterface
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -12,8 +9,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
-import androidx.databinding.Observable
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
@@ -21,7 +16,6 @@ import androidx.navigation.ui.NavigationUI
 import com.example.mentalhealthapp.databinding.FragmentItemListBinding
 import com.example.mentalhealthapp.db.DisorderDatabase
 import com.example.mentalhealthapp.utils.sendNotification
-import com.example.mentalhealthapp.utils.subscribeOnBackground
 import com.example.mentalhealthapp.viewmodel.DisorderViewModel
 import com.example.mentalhealthapp.viewmodel.DisorderViewModelFactory
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -30,17 +24,18 @@ import kotlinx.android.synthetic.main.fragment_item_list.*
 /**
  * A fragment representing a list of Items.
  */
-class ItemFragment : Fragment() {
+class HomeFragment : Fragment() {
     private val  disorder=null
     private lateinit var disorderViewModel: DisorderViewModel
     private lateinit var adapter :MyItemRecyclerViewAdapter
-    val TAG= ItemFragment::class.java.simpleName as String
+    val TAG= HomeFragment::class.java.simpleName as String
     private lateinit var fab:FloatingActionButton
     private val MOOD_PARAMETER="ItemFragmentMood"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
+       // (activity as AppCompatActivity?)!!.supportActionBar?.title="Home"
 
         retainInstance = true
     }
@@ -61,6 +56,7 @@ class ItemFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View?
     {
+        (activity as AppCompatActivity?)!!.supportActionBar?.title="Home"
         val binding: FragmentItemListBinding = DataBindingUtil.inflate(
             inflater, R.layout.fragment_item_list, container, false)
         fab=binding.fab
@@ -86,6 +82,7 @@ class ItemFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
+        (activity as AppCompatActivity?)!!.supportActionBar?.title="Home"
         val notificationManager = ContextCompat.getSystemService(
             requireContext(),
             NotificationManager::class.java
@@ -103,7 +100,7 @@ class ItemFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        (activity as AppCompatActivity?)!!.supportActionBar!!.show()
+        (activity as AppCompatActivity?)!!.supportActionBar?.title="Home"
         val myItemRecyclerViewAdapter=MyItemRecyclerViewAdapter();
         list_recycler_view.apply{
             layoutManager = LinearLayoutManager(activity)
@@ -118,7 +115,7 @@ class ItemFragment : Fragment() {
     }
 
     companion object {
-        fun newInstance(): ItemFragment = ItemFragment()
+        fun newInstance(): HomeFragment = HomeFragment()
 
     }
 }
