@@ -1,10 +1,33 @@
 package com.example.mentalhealthapp
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import android.provider.DocumentsContract
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.webkit.WebSettings
+import android.webkit.WebView
+import android.widget.TextView
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import com.example.mentalhealthapp.utils.subscribeOnBackground
+import io.reactivex.Observable
+import io.reactivex.ObservableOnSubscribe
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import org.jsoup.Jsoup
+import org.jsoup.nodes.Document
+import org.jsoup.nodes.Element
+import org.jsoup.select.Elements
+import java.io.IOException
+import java.util.concurrent.Callable
+
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -18,14 +41,16 @@ private const val ARG_PARAM2 = "param2"
  */
 class DetailsFragment : Fragment() {
     // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+    private var title: String? = null
+    private lateinit var webView:WebView;
+    private lateinit var textTest:TextView;
+    private var TAG="DetailsFragment"
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+            title = it.getString("title")
         }
     }
 
@@ -37,6 +62,45 @@ class DetailsFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_details, container, false)
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+       //
+        val mainLooper = Looper.getMainLooper()
+        GlobalScope.launch{
+
+            try {
+                val mUrl="https://www.helpguide.org/?x=0&y=0&s=${title}"
+                val doc: org.jsoup.nodes.Document = Jsoup.connect(mUrl).get()
+                doc.getElementsByClass("banner").remove()
+                doc.getElementsByClass("content-info").remove()
+                doc.getElementById("sub-footer").remove()
+                doc.getElementsByClass("search-results-pagination").remove()
+                Log.d(TAG,doc.toString())
+                Handler(mainLooper).post {
+                    webView= view.findViewById<WebView>(R.id.webview)
+                    val webSettings: WebSettings = webView.settings
+                    webSettings.javaScriptEnabled = false
+                    webView.loadDataWithBaseURL(mUrl,doc.toString(),"text/html","utf-8","");
+                }
+
+            } catch (e: IOException)
+            {
+                e.printStackTrace();
+
+            }
+
+        }
+
+
+
+    }
+
+    override fun onResume() {
+        super.onResume()
+        (activity as AppCompatActivity?)!!.supportActionBar?.title="Details"
+    }
+
+
     companion object {
         /**
          * Use this factory method to create a new instance of
@@ -46,8 +110,6 @@ class DetailsFragment : Fragment() {
          * @param param2 Parameter 2.
          * @return A new instance of fragment DetailsFragment.
          */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
         fun newInstance(param1: String, param2: String) =
             DetailsFragment().apply {
                 arguments = Bundle().apply {

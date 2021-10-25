@@ -7,20 +7,50 @@
 
     <fragment
         android:id="@+id/itemFragment2"
-        android:name="com.example.mentalhealthapp.ItemFragment"
+        android:name="com.example.mentalhealthapp.HomeFragment"
         android:label="ItemFragment" >
         <action
             android:id="@+id/action_itemFragment2_to_searchFragment"
             app:destination="@id/searchFragment" />
+        <action
+            android:id="@+id/action_itemFragment2_to_profileFragment2"
+            app:destination="@id/profileFragment" />
+        <action
+            android:id="@+id/action_itemFragment2_to_statisticsFragment2"
+            app:destination="@id/statisticsFragment" />
+        <action
+            android:id="@+id/action_itemFragment2_to_detailsFragment2"
+            app:destination="@id/detailsFragment2" >
+            <argument
+                android:name="titleargs"
+                app:argType="string"
+                app:nullable="true" />
+        </action>
+
     </fragment>
     <fragment
         android:id="@+id/searchFragment"
         android:name="com.example.mentalhealthapp.SearchFragment"
         android:label="fragment_search"
-        tools:layout="@layout/fragment_search" >
-
-        <action
-            android:id="@+id/action_searchFragment_to_itemFragment22"
-            app:destination="@id/itemFragment2" />
+        tools:layout="@layout/fragment_search" />
+    <fragment
+        android:id="@+id/statisticsFragment"
+        android:name="com.example.mentalhealthapp.StatisticsFragment"
+        android:label="fragment_statistics"
+        tools:layout="@layout/fragment_statistics" />
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.example.mentalhealthapp.ProfileFragment"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile" />
+    <fragment
+        android:id="@+id/detailsFragment2"
+        android:name="com.example.mentalhealthapp.DetailsFragment"
+        android:label="fragment_details"
+        tools:layout="@layout/fragment_details" >
+        <argument
+            android:name="titleargs"
+            app:argType="string"
+            app:nullable="true" />
     </fragment>
 </navigation>

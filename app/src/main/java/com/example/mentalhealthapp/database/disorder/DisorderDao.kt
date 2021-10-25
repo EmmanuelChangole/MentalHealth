@@ -1,9 +1,7 @@
-package com.example.mentalhealthapp.dao
+package com.example.mentalhealthapp.database.disorder
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
-import com.example.mentalhealthapp.database.Disorder
-
 
 
 @Dao

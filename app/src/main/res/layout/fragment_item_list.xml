@@ -6,6 +6,9 @@
         <variable
             name="disorderViewModel"
             type="com.example.mentalhealthapp.viewmodel.DisorderViewModel" />
+        <variable
+            name="moodViewModel"
+            type="com.example.mentalhealthapp.viewmodel.MoodViewModel" />
 
     </data>
 

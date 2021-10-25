@@ -1,11 +1,9 @@
-package com.example.mentalhealthapp.db
+package com.example.mentalhealthapp.database.disorder
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.example.mentalhealthapp.dao.DisorderDao
-import com.example.mentalhealthapp.database.Disorder
 
 
 @Database(entities = [Disorder::class], version = 1,exportSchema = false)
@@ -30,7 +28,7 @@ abstract class DisorderDatabase:RoomDatabase()
                        "disorder_database"
                    ).fallbackToDestructiveMigration().build()
 
-                INSTANCE=instance
+                INSTANCE =instance
 
 
                }
