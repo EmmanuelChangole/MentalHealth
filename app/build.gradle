@@ -3,9 +3,12 @@ plugins {
     id 'kotlin-android'
     id 'kotlin-android-extensions'
     id 'kotlin-kapt'
+    id 'androidx.navigation.safeargs.kotlin'
+
 
 
 }
+
 
 android {
     compileSdk 31
@@ -125,6 +128,10 @@ dependencies {
    // implementation 'com.google.android.gms:play-services-auth:19.2.0'
     //App intro
     implementation 'com.github.AppIntro:AppIntro:6.1.0'
+    implementation("org.jsoup:jsoup:1.11.3")
+
+
+
 }
 
 

@@ -3,16 +3,14 @@ package com.example.mentalhealthapp.viewmodel
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.viewModelScope
 import com.example.mentalhealthapp.R
-import com.example.mentalhealthapp.dao.DisorderDao
-import com.example.mentalhealthapp.database.Disorder
-import com.example.mentalhealthapp.db.DisorderDatabase
+import com.example.mentalhealthapp.database.disorder.DisorderDao
+import com.example.mentalhealthapp.database.disorder.Disorder
+import com.example.mentalhealthapp.database.disorder.DisorderDatabase
 import com.example.mentalhealthapp.utils.subscribeOnBackground
-import kotlinx.coroutines.launch
 
 class DisorderViewModel(
-    val database:DisorderDao,
+    val database: DisorderDao,
     application:Application):AndroidViewModel(application)
 {
 

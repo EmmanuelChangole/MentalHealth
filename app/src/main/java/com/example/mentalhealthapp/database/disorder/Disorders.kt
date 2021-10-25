@@ -1,4 +1,4 @@
-package com.example.mentalhealthapp.database
+package com.example.mentalhealthapp.database.disorder
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

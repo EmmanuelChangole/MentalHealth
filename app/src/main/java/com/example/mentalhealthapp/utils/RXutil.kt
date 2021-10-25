@@ -3,7 +3,10 @@ package com.example.mentalhealthapp.utils
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import java.util.concurrent.Callable
+
 fun subscribeOnBackground(function: () -> Unit) {
+    val result=null;
     Single.fromCallable {
         function()
     }
