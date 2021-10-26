@@ -21,4 +21,10 @@ interface MoodDao
 
     @Query("select * from mood_database order by id desc")
     fun getAllMood(): LiveData<List<Mood>>
+
+    @Query("select * from mood_database order by id desc")
+     fun  getAllMoodList(): List<Mood>
+
+
+
 }

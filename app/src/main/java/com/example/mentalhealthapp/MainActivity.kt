@@ -5,23 +5,19 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.SeekBar
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.ui.NavigationUI
-import com.example.mentalhealthapp.database.disorder.DisorderDatabase
 import com.example.mentalhealthapp.database.mood.Mood
 import com.example.mentalhealthapp.database.mood.MoodDatabase
 import com.example.mentalhealthapp.databinding.ActivityMainBinding
 import com.example.mentalhealthapp.utils.Constants
-import com.example.mentalhealthapp.viewmodel.DisorderViewModelFactory
 import com.example.mentalhealthapp.viewmodel.MoodViewModel
 import com.example.mentalhealthapp.viewmodel.MoodViewModelFactory
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
-import kotlinx.android.synthetic.main.activity_main.*
 
 
 class MainActivity : AppCompatActivity(), SeekBar.OnSeekBarChangeListener {
@@ -108,7 +104,12 @@ class MainActivity : AppCompatActivity(), SeekBar.OnSeekBarChangeListener {
 
     private fun saveMood()
     {
-        val mood=Mood(title = moods[mCurrentMood],description = "the intense of mood is ${mCurrentMoodIntensity}")
+        val time = System.currentTimeMillis()/10000
+        val mood=Mood(
+            title = moods[mCurrentMood],
+            description = "the intense of mood is ${mCurrentMoodIntensity}",
+            date = mCurrentMood+1,
+            value =mCurrentMoodIntensity)
         val dataSource = MoodDatabase.getInstance(application).moodDao
         val viewModelFactory = MoodViewModelFactory(dataSource, application)
         val moodViewModel=ViewModelProvider(this,viewModelFactory).get(MoodViewModel::class.java)

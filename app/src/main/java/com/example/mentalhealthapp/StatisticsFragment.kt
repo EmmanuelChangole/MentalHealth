@@ -1,11 +1,35 @@
 package com.example.mentalhealthapp
 
+import android.graphics.Color
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
+import androidx.lifecycle.Observer
+import androidx.lifecycle.asFlow
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.switchMap
+import com.example.mentalhealthapp.database.mood.Mood
+import com.example.mentalhealthapp.database.mood.MoodDao
+import com.example.mentalhealthapp.database.mood.MoodDatabase
+import com.example.mentalhealthapp.utils.subscribeOnBackground
+import com.github.mikephil.charting.charts.LineChart
+import com.github.mikephil.charting.components.XAxis
+import com.github.mikephil.charting.components.YAxis
+import com.github.mikephil.charting.data.Entry
+import com.github.mikephil.charting.data.LineData
+import com.github.mikephil.charting.data.LineDataSet
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
+import com.github.mikephil.charting.utils.EntryXComparator
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
+import java.util.*
+import kotlin.collections.ArrayList
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -41,6 +65,88 @@ class StatisticsFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         (activity as AppCompatActivity?)!!.supportActionBar?.title="Statistics"
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        drawMoodGraph(view)
+    }
+
+    private fun drawMoodGraph(view: View)
+    {
+        val moodDataBase=MoodDatabase.getInstance(view.context)
+        val moodDao:MoodDao=moodDataBase.moodDao
+         var allMoods:ArrayList<Mood>?=null
+        var pastMoods:ArrayList<Mood> = ArrayList()
+        var count:Int=0
+        moodDao.getAllMood().observe(requireActivity(), Observer {
+          for(item in it)
+          {
+              pastMoods.add(item)
+              count++
+              if(count ==7)
+              {
+                  break
+              }
+
+          }
+            var entries:ArrayList<Entry> = ArrayList()
+            for (mood in pastMoods)
+            {
+                entries.add(Entry(mood.value.toFloat(),mood.date.toFloat()))
+
+            }
+            Collections.sort(entries,EntryXComparator())
+
+            var dataset=LineDataSet(entries,"Mood history")
+            dataset.setColor(R.color.colorBottomNavActive)
+            dataset.setValueTextColor(R.color.colorBottomNavActive)
+            dataset.setMode(LineDataSet.Mode.CUBIC_BEZIER)
+            dataset.setDrawFilled(true)
+            dataset.setLineWidth(4.0f)
+            dataset.setHighlightLineWidth(4f)
+            //dataset.setColor(ContextCompat.getColor(requireContext(), R.color.colorBottomNavActive))
+
+            var chart:LineChart=view.findViewById(R.id.mood_chart)
+            chart.getDescription().setEnabled(false)
+            chart.getAxisLeft().setTextColor(Color.WHITE)
+            chart.getXAxis().setTextColor(Color.WHITE)
+            chart.getXAxis().setAxisMinimum(1f)
+            chart.getXAxis().setAxisMaximum(7f)
+            chart.getLegend().setEnabled(false)
+            chart.getAxisLeft().setDrawGridLines(false)
+            chart.getAxisRight().setDrawGridLines(false)
+            val xAxis: XAxis = chart.getXAxis()
+            xAxis.position = XAxis.XAxisPosition.BOTTOM
+            xAxis.disableAxisLineDashedLine()
+            xAxis.setDrawLabels(false)
+
+            val weekdays = arrayOf("Sun", "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat")
+            xAxis.valueFormatter = IndexAxisValueFormatter(weekdays)
+
+            val yAxisRight = chart.axisRight
+            yAxisRight.setDrawLabels(false)
+
+            val lineData = LineData(dataset)
+            chart.data = lineData
+            chart.invalidate()
+
+
+
+
+           // Toast.makeText(requireContext(),"${pastMoods.size}",Toast.LENGTH_LONG).show()
+        })
+
+
+
+
+
+
+
+
+
+
+
     }
 
     companion object {

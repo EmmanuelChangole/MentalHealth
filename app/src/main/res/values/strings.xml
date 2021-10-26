@@ -45,4 +45,6 @@
     <string name="intro_slide2_body">Know how your friends are feeling</string>
     <string name="profile_fragment">Profile Fragment</string>
     <string name="stats_fragment">Statistics Fragment</string>
+    <string name="permission_location_rationale">Location Permission</string>
+    <string name="tv_error">Please click add button to add your mood.</string>
 </resources>
