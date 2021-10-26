@@ -1,12 +1,11 @@
 package com.example.mentalhealthapp
 
 import android.app.AlertDialog
-import android.app.Application
 import android.app.NotificationManager
-import android.content.Context
 import android.os.Bundle
 import android.view.*
 import android.widget.SeekBar
+import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -20,12 +19,10 @@ import androidx.navigation.ui.NavigationUI
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mentalhealthapp.databinding.FragmentItemListBinding
-import com.example.mentalhealthapp.database.disorder.DisorderDatabase
 import com.example.mentalhealthapp.database.mood.Mood
 import com.example.mentalhealthapp.database.mood.MoodDatabase
 import com.example.mentalhealthapp.utils.sendNotification
 import com.example.mentalhealthapp.viewmodel.DisorderViewModel
-import com.example.mentalhealthapp.viewmodel.DisorderViewModelFactory
 import com.example.mentalhealthapp.viewmodel.MoodViewModel
 import com.example.mentalhealthapp.viewmodel.MoodViewModelFactory
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -86,7 +83,8 @@ class HomeFragment : Fragment() ,SeekBar.OnSeekBarChangeListener{
            // Toast.makeText(this.context,"Whats on your mind? not yet implemented",Toast.LENGTH_SHORT).show()
         })
         val application = requireNotNull(this.activity).application
-     /*   val dataSource = DisorderDatabase.getInstance(application).disorderDatabaseDao
+
+         /*   val dataSource = DisorderDatabase.getInstance(application).disorderDatabaseDao
         val viewModelFactory = DisorderViewModelFactory(dataSource, application)
          disorderViewModel = ViewModelProvider(
             this, viewModelFactory).get(DisorderViewModel::class.java)
@@ -103,8 +101,18 @@ class HomeFragment : Fragment() ,SeekBar.OnSeekBarChangeListener{
         adapter = MyItemRecyclerViewAdapter()
         moodViewModel.getAllMoods().observe(viewLifecycleOwner, Observer {
             adapter.submitList(it)
+            if(it.isEmpty())
+            {
+                val tvDetails:TextView=binding.tvError
+                tvDetails.visibility=View.VISIBLE
+            }
 
         })
+
+
+
+
+
 
         return   binding.root;
 
@@ -139,9 +147,23 @@ class HomeFragment : Fragment() ,SeekBar.OnSeekBarChangeListener{
             adapter=myItemRecyclerViewAdapter
         }
         moodViewModel.getAllMoods().observe(viewLifecycleOwner, Observer {
+            if(it.isEmpty())
+            {
+                val tvDetails:TextView=view.findViewById(R.id.tvError);
+                tvDetails.visibility=View.VISIBLE;
+
+            }
+            else
+            {
+                val tvDetails:TextView=view.findViewById(R.id.tvError);
+                tvDetails.visibility=View.GONE;
+
+            }
           myItemRecyclerViewAdapter.submitList(it)
 
+
         })
+
 
         var itemTouchHelperCallback=setUpTouchHelper();
         var itemTouchHelper=ItemTouchHelper(itemTouchHelperCallback)
@@ -222,7 +244,7 @@ class HomeFragment : Fragment() ,SeekBar.OnSeekBarChangeListener{
         val seekBar: SeekBar = SeekBar(getActivity())
         seekBar.max=4
         seekBar.setOnSeekBarChangeListener(this);
-        builder.setTitle("How is Intense is the feeling")
+        builder.setTitle("How is Intense the feeling?")
         builder.setView(seekBar)
         builder.setPositiveButton("save",{_,which->saveMood()})
         builder.show()
@@ -231,8 +253,13 @@ class HomeFragment : Fragment() ,SeekBar.OnSeekBarChangeListener{
 
     private fun saveMood()
     {
+
         val application = requireNotNull(this.activity).application
-        val mood= Mood(title = moods[mCurrentMood],description = "the intense of mood is ${mCurrentMoodIntensity}")
+        val mood= Mood(
+            title = moods[mCurrentMood],
+            description = "the intense of mood is ${mCurrentMoodIntensity}",
+            date = mCurrentMood+1,
+            value = mCurrentMoodIntensity)
         val dataSource = MoodDatabase.getInstance(application).moodDao
         val viewModelFactory = MoodViewModelFactory(dataSource, application)
         val moodViewModel=ViewModelProvider(this,viewModelFactory).get(MoodViewModel::class.java)

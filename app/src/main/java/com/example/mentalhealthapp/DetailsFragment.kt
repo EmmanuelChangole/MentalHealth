@@ -1,5 +1,6 @@
 package com.example.mentalhealthapp
 
+import android.graphics.Color.parseColor
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -11,10 +12,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.webkit.WebSettings
 import android.webkit.WebView
+import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.mentalhealthapp.utils.subscribeOnBackground
+import com.google.type.Color
+import com.mikhaellopez.circularprogressbar.CircularProgressBar
+import com.mrtyvz.archedimageprogress.ArchedImageProgressBar
 import io.reactivex.Observable
 import io.reactivex.ObservableOnSubscribe
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -43,7 +48,7 @@ class DetailsFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var title: String? = null
     private lateinit var webView:WebView;
-    private lateinit var textTest:TextView;
+    private lateinit var progressBar: ProgressBar
     private var TAG="DetailsFragment"
 
 
@@ -64,7 +69,22 @@ class DetailsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-       //
+        //progressBar=view.findViewById(R.id.progressBar)
+        //progressBar.display
+
+        val customTextArcProgress=view.findViewById<ArchedImageProgressBar>(R.id.linkedin_progressBar)
+        customTextArcProgress.apply{
+           setProgressText(arrayOf("Loading"), "#c5cae9")
+           setProgressTextSize(13.0f)
+            setArchSize(43.0f)
+            setArchLength(120)
+            setArchStroke(9.0f)
+            setArchSpeed(3)
+
+        }
+
+
+
         val mainLooper = Looper.getMainLooper()
         GlobalScope.launch{
 
@@ -81,6 +101,7 @@ class DetailsFragment : Fragment() {
                     val webSettings: WebSettings = webView.settings
                     webSettings.javaScriptEnabled = false
                     webView.loadDataWithBaseURL(mUrl,doc.toString(),"text/html","utf-8","");
+                    customTextArcProgress.visibility=View.GONE
                 }
 
             } catch (e: IOException)
