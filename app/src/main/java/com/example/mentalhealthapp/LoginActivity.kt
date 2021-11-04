@@ -62,6 +62,7 @@ class LoginActivity : AppIntro() {
             ).setTheme(R.style.GreenTheme).setLogo(R.mipmap.ic_launcher)
                 .build(), LoginFragment.SIGN_IN_RESULT_CODE
         )
+
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

@@ -119,13 +119,13 @@ class StatisticsFragment : Fragment() {
             val xAxis: XAxis = chart.getXAxis()
             xAxis.position = XAxis.XAxisPosition.BOTTOM
             xAxis.disableAxisLineDashedLine()
-            xAxis.setDrawLabels(false)
+            xAxis.setDrawLabels(true)
 
             val weekdays = arrayOf("Sun", "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat")
             xAxis.valueFormatter = IndexAxisValueFormatter(weekdays)
 
             val yAxisRight = chart.axisRight
-            yAxisRight.setDrawLabels(false)
+            yAxisRight.setDrawLabels(true)
 
             val lineData = LineData(dataset)
             chart.data = lineData

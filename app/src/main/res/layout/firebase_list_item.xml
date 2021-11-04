@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:elevation="8dp"
+    app:cardCornerRadius="8dp"
+    android:outlineSpotShadowColor="@color/dark_grey"
+    android:layout_margin="8dp"
+    android:padding="8dp">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/img_holder"
+            android:layout_width="100dp"
+            android:src="@drawable/ic_anxiety"
+            android:layout_height="100dp">
+
+        </ImageView>
+
+        <TextView
+            android:id="@+id/tvName"
+            android:layout_toRightOf="@id/img_holder"
+            android:layout_marginLeft="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_gravity="left"
+            android:textStyle="bold"
+            android:paddingLeft="16dp"
+            android:text="@string/title"/>
+
+        <TextView
+            android:layout_marginTop="15dp"
+            android:layout_marginLeft="10dp"
+            android:id="@+id/specialist"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/img_holder"
+            android:layout_below="@id/tvName"
+            android:layout_gravity="left"
+            android:paddingLeft="16dp"
+            android:text="@string/description"/>
+    </RelativeLayout>
+</androidx.cardview.widget.CardView>

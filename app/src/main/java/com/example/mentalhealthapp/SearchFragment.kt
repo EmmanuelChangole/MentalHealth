@@ -1,31 +1,34 @@
 package com.example.mentalhealthapp
 
-import android.Manifest.permission.ACCESS_FINE_LOCATION
 import android.app.Activity
 import android.content.pm.PackageManager
 import android.net.http.SslError
-import android.os.Build
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.webkit.*
-import android.webkit.WebSettings.MIXED_CONTENT_ALWAYS_ALLOW
+import android.widget.LinearLayout
+import android.widget.SearchView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.mentalhealthapp.data.model.User
+import com.example.mentalhealthapp.receiver.UserViewHolder
+import com.firebase.ui.database.FirebaseRecyclerAdapter
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import com.mrtyvz.archedimageprogress.ArchedImageProgressBar
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import org.jsoup.Jsoup
-import java.io.IOException
-import java.util.jar.Manifest
+import com.firebase.ui.database.FirebaseRecyclerOptions
+
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -38,10 +41,14 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  */
 class SearchFragment : Fragment() {
+    val TAG=SearchFragment.javaClass.simpleName
     lateinit var webView:WebView
     val MY_PERMISSIONS_REQUEST_LOCATION=101
     var mGeoLocationCallback:GeolocationPermissions.Callback? = null
     var mGeoLocationRequestOrigin:String ?= null
+    lateinit var searchView:SearchView
+    lateinit var mAdapter:FirebaseRecyclerAdapter<User,UserViewHolder>
+    lateinit var recylerView:RecyclerView
     private val mWebClient=object :WebChromeClient()
     {
         override fun onGeolocationPermissionsShowPrompt(
@@ -109,6 +116,8 @@ class SearchFragment : Fragment() {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
+
+
     }
 
     override fun onCreateView(
@@ -116,6 +125,8 @@ class SearchFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
+
+
         return inflater.inflate(R.layout.fragment_search, container, false)
     }
 
@@ -126,9 +137,27 @@ class SearchFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        searchView=view.findViewById(R.id.searchView)
+        recylerView=view.findViewById(R.id.recyclerView)
         val customTextArcProgress=view.findViewById<ArchedImageProgressBar>(R.id.linkedin_progressBar)
+        searchView.setOnQueryTextListener(object :SearchView.OnQueryTextListener
+        {
+            override fun onQueryTextSubmit(p0: String?): Boolean
+            {
+                return false;
 
-        customTextArcProgress.apply{
+            }
+
+            override fun onQueryTextChange(name: String): Boolean
+            {
+                getTherapist(name)
+                return false;
+
+            }
+
+        })
+
+     /*      customTextArcProgress.apply{
             setProgressText(arrayOf("Loading"), "#c5cae9")
             setProgressTextSize(13.0f)
             setArchSize(43.0f)
@@ -136,9 +165,12 @@ class SearchFragment : Fragment() {
             setArchStroke(9.0f)
             setArchSpeed(3)
 
-        }
-        val mainLooper = Looper.getMainLooper()
-        GlobalScope.launch{
+        }*/
+
+
+       // val mainLooper = Looper.getMainLooper()
+
+       /* GlobalScope.launch{
 
             try {
                 val mUrl="https://www.therapyroute.com/"
@@ -168,10 +200,108 @@ class SearchFragment : Fragment() {
 
             }
 
+        }*/
+
+
+       // getTherapist()
+
+    }
+
+    private fun getTherapist(name:String?)
+    {
+        val mRef = FirebaseDatabase.getInstance("https://decent-envoy-323808-default-rtdb.firebaseio.com/")
+                .getReference("therapist")
+        mRef.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                snapshot.children.forEach {
+
+
+                }
+
+
+            }
+
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+        })
+        val query= mRef.orderByChild("specialist").startAt(name).endAt(name+"\uf8ff")
+        val options: FirebaseRecyclerOptions<User> = FirebaseRecyclerOptions.Builder<User>()
+            .setQuery(query, User::class.java)
+            .build()
+         mAdapter =object :FirebaseRecyclerAdapter<User, UserViewHolder>(options)
+        {
+            override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserViewHolder {
+                val view: View = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.firebase_list_item, parent, false)
+                return UserViewHolder(view)
+            }
+
+            override fun onBindViewHolder(holder: UserViewHolder, position: Int, model: User)
+            {
+                Toast.makeText(context?.applicationContext,"Noting to show",Toast.LENGTH_LONG).show()
+                holder.bind(model)
+                Toast.makeText(context?.applicationContext,"${model.username} ${model.specialist} ${model.access} ${model.gender}",Toast.LENGTH_LONG).show()
+
+
+            }
+
+            override fun onDataChanged() {
+                super.onDataChanged()
+                if(itemCount ==0)
+                {
+                    Toast.makeText(context?.applicationContext,"Noting to show",Toast.LENGTH_LONG).show()
+                }
+                else
+                {
+                    Toast.makeText(context?.applicationContext,"Some items ${itemCount}" ,Toast.LENGTH_LONG).show()
+                }
+
+            }
+        }
+        mAdapter.startListening()
+        recylerView.apply{
+            adapter=mAdapter
+            layoutManager = LinearLayoutManager(activity)
+            setHasFixedSize(true)
         }
 
 
+        mRef.orderByChild("specialist").startAt(name).endAt(name+"\uf8ff")
+            .addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot)
+                {
+
+                    snapshot.children.forEach{
+                        Log.d(TAG, "PARENT: " + it.key)
+                        Log.d(TAG, "" +it.child("name").value)
+                        var username=it.getValue(User::class.java)!!.username
+                        var specialist=it.getValue(User::class.java)!!.specialist
+                        var access=it.getValue(User::class.java)!!.access
+                        var gender=it.getValue(User::class.java)!!.gender
+
+                      //  Toast.makeText(context?.applicationContext,"${username} ${specialist} ${access} ${gender}",Toast.LENGTH_LONG).show()
+
+
+                    }
+
+
+                }
+
+                override fun onCancelled(error: DatabaseError)
+                {
+
+
+                }
+            })
     }
+
+    override fun onStart() {
+        super.onStart()
+
+    }
+
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<String>, grantResults: IntArray

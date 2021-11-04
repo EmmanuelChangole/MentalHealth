@@ -97,6 +97,8 @@ class DisorderViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
 
 
     }}
+
+
 class DiffCallback:DiffUtil.ItemCallback<Mood>(){
     override fun areItemsTheSame(oldItem: Mood, newItem: Mood): Boolean {
         return oldItem.id == newItem.id

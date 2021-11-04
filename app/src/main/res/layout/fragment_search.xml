@@ -8,11 +8,29 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <WebView
+
+        <SearchView
+            android:layout_margin="10dp"
+            android:id="@+id/searchView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:queryHint="@string/search"
+            android:autofillHints="Search"
+
+            />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_below="@id/searchView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
+            />
+
+      <!--  <WebView
             android:id="@+id/webView"
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent" />
-        <com.mrtyvz.archedimageprogress.ArchedImageProgressBar
+            android:layout_height="fill_parent" />-->
+ <!--       <com.mrtyvz.archedimageprogress.ArchedImageProgressBar
             android:layout_centerInParent="true"
             android:id="@+id/linkedin_progressBar"
             android:layout_width="150dp"
@@ -25,7 +43,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>
-
+-->
 
 
     </RelativeLayout>

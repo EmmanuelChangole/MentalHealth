@@ -16,7 +16,7 @@
     <string name="details">Details not yet implemented</string>
     <string name="tvLogin">Login</string>
     <string name="hintUserName">Username</string>
-    <string name="butDone">Go</string>
+    <string name="butDone">Update</string>
     <string name="Password">Password</string>
     <string name="about">About</string>
     <string name="nav_header_title">Title</string>
@@ -47,4 +47,6 @@
     <string name="stats_fragment">Statistics Fragment</string>
     <string name="permission_location_rationale">Location Permission</string>
     <string name="tv_error">Please click add button to add your mood.</string>
+    <string name="tvprofile">Edit Profile</string>
+    <string name="search">Search</string>
 </resources>
