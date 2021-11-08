@@ -109,20 +109,24 @@ class StatisticsFragment : Fragment() {
 
             var chart:LineChart=view.findViewById(R.id.mood_chart)
             chart.getDescription().setEnabled(false)
-            chart.getAxisLeft().setTextColor(Color.WHITE)
-            chart.getXAxis().setTextColor(Color.WHITE)
+            chart.getAxisLeft().setTextColor(Color.BLACK)
+            chart.getXAxis().setTextColor(Color.BLACK)
             chart.getXAxis().setAxisMinimum(1f)
             chart.getXAxis().setAxisMaximum(7f)
-            chart.getLegend().setEnabled(false)
+            chart.getLegend().setEnabled(true)
             chart.getAxisLeft().setDrawGridLines(false)
             chart.getAxisRight().setDrawGridLines(false)
             val xAxis: XAxis = chart.getXAxis()
+            val yAxis:YAxis=chart.axisLeft
             xAxis.position = XAxis.XAxisPosition.BOTTOM
             xAxis.disableAxisLineDashedLine()
             xAxis.setDrawLabels(true)
 
-            val weekdays = arrayOf("Sun", "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat")
-            xAxis.valueFormatter = IndexAxisValueFormatter(weekdays)
+            //val weekdays = arrayOf("Sun", "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat")
+            val mood=arrayOf("Depressed","Sad","Angry","Scared","Moderate","Happy")
+
+            yAxis.valueFormatter=IndexAxisValueFormatter(mood)
+
 
             val yAxisRight = chart.axisRight
             yAxisRight.setDrawLabels(true)

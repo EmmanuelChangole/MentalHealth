@@ -11,13 +11,17 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:padding="10dp"
             android:id="@+id/img_holder"
             android:layout_width="100dp"
-            android:src="@drawable/ic_anxiety"
-            android:layout_height="100dp">
+            android:src="@drawable/ic_person"
+            app:civ_border_color="@color/material_green_700"
+            android:layout_height="100dp"
+            app:civ_border_width="1dp"
+            >
 
-        </ImageView>
+        </de.hdodenhof.circleimageview.CircleImageView>
 
         <TextView
             android:id="@+id/tvName"

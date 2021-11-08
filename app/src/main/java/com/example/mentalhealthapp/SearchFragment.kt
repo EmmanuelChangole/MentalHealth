@@ -10,8 +10,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.webkit.*
-import android.widget.LinearLayout
 import android.widget.SearchView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -49,6 +49,7 @@ class SearchFragment : Fragment() {
     lateinit var searchView:SearchView
     lateinit var mAdapter:FirebaseRecyclerAdapter<User,UserViewHolder>
     lateinit var recylerView:RecyclerView
+    lateinit var tvSearch:TextView
     private val mWebClient=object :WebChromeClient()
     {
         override fun onGeolocationPermissionsShowPrompt(
@@ -139,18 +140,22 @@ class SearchFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         searchView=view.findViewById(R.id.searchView)
         recylerView=view.findViewById(R.id.recyclerView)
+        tvSearch=view.findViewById(R.id.tvSearch)
+
         val customTextArcProgress=view.findViewById<ArchedImageProgressBar>(R.id.linkedin_progressBar)
+        searchView.queryHint="type your mental illness"
         searchView.setOnQueryTextListener(object :SearchView.OnQueryTextListener
         {
-            override fun onQueryTextSubmit(p0: String?): Boolean
+            override fun onQueryTextSubmit(query: String?): Boolean
             {
+                getTherapist(query)
                 return false;
 
             }
 
-            override fun onQueryTextChange(name: String): Boolean
+            override fun onQueryTextChange(query: String): Boolean
             {
-                getTherapist(name)
+                getTherapist(query)
                 return false;
 
             }
@@ -207,26 +212,11 @@ class SearchFragment : Fragment() {
 
     }
 
-    private fun getTherapist(name:String?)
+    private fun getTherapist(search_query:String?)
     {
         val mRef = FirebaseDatabase.getInstance("https://decent-envoy-323808-default-rtdb.firebaseio.com/")
                 .getReference("therapist")
-        mRef.addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                snapshot.children.forEach {
-
-
-                }
-
-
-            }
-
-
-            override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
-            }
-        })
-        val query= mRef.orderByChild("specialist").startAt(name).endAt(name+"\uf8ff")
+        val query= mRef.orderByChild("specialist").startAt(search_query).endAt(search_query+"\uf8ff")
         val options: FirebaseRecyclerOptions<User> = FirebaseRecyclerOptions.Builder<User>()
             .setQuery(query, User::class.java)
             .build()
@@ -240,25 +230,30 @@ class SearchFragment : Fragment() {
 
             override fun onBindViewHolder(holder: UserViewHolder, position: Int, model: User)
             {
-                Toast.makeText(context?.applicationContext,"Noting to show",Toast.LENGTH_LONG).show()
-                holder.bind(model)
-                Toast.makeText(context?.applicationContext,"${model.username} ${model.specialist} ${model.access} ${model.gender}",Toast.LENGTH_LONG).show()
-
-
+                holder.bind(model,context?.applicationContext)
+                holder.itemView.setOnClickListener(){
+                        view : View ->
+                   Toast.makeText(context?.applicationContext,model.toString(),Toast.LENGTH_LONG).show()
+                }
             }
 
             override fun onDataChanged() {
                 super.onDataChanged()
                 if(itemCount ==0)
                 {
-                    Toast.makeText(context?.applicationContext,"Noting to show",Toast.LENGTH_LONG).show()
+                    tvSearch.setText("Oops! Therapist not found.")
+                    tvSearch.visibility= View.VISIBLE
+
                 }
                 else
                 {
-                    Toast.makeText(context?.applicationContext,"Some items ${itemCount}" ,Toast.LENGTH_LONG).show()
+                    tvSearch.visibility= View.GONE
+
                 }
 
             }
+
+
         }
         mAdapter.startListening()
         recylerView.apply{
@@ -268,7 +263,7 @@ class SearchFragment : Fragment() {
         }
 
 
-        mRef.orderByChild("specialist").startAt(name).endAt(name+"\uf8ff")
+        mRef.orderByChild("specialist").startAt(search_query).endAt(search_query+"\uf8ff")
             .addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot)
                 {

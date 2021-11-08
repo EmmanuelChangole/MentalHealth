@@ -9,6 +9,7 @@ data class User
     var access:String?="",
     var gender: String? = "",
     var specialist:String?="",
+    var imageUrl:String?=""
 )
 
 
