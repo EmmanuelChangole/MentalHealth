@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/nav_header_height"
+    android:layout_height="wrap_content"
     android:gravity="bottom"
     android:orientation="vertical"
     android:background="@color/material_green_500"
@@ -13,25 +13,25 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/imageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_grief"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
         />
-
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="@dimen/nav_header_vertical_spacing"
-        android:text="@string/nav_header_title"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
-
-    <TextView
-        android:id="@+id/textView"
+        android:id="@+id/edUsername"
+        android:layout_marginTop="10dp"
+        android:layout_gravity="left"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/nav_header_subtitle"/>
+        android:textSize="20dp"
+        android:paddingTop="@dimen/nav_header_vertical_spacing"
+        android:text="Username"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
+
+
+
 
 </LinearLayout>

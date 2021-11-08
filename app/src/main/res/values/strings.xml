@@ -49,4 +49,5 @@
     <string name="tv_error">Please click add button to add your mood.</string>
     <string name="tvprofile">Edit Profile</string>
     <string name="search">Search</string>
+    <string name="search_hint">Search for therapist by typing your mental illness</string>
 </resources>

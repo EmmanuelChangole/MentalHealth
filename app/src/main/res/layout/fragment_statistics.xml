@@ -30,10 +30,10 @@
 
         <com.github.mikephil.charting.charts.LineChart
             android:id="@+id/mood_chart"
-            android:layout_width="340dp"
+            android:layout_width="350dp"
             android:layout_height="match_parent"
             android:layout_marginLeft="12dp"
-            android:layout_marginTop="10dp"/>
+            android:layout_marginTop="10dp" />
 
     </RelativeLayout>
 
