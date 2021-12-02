@@ -70,7 +70,16 @@ class DisorderViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
         {
             mImageView?.setImageResource(R.drawable.ic_sad)
         }
-        else if(mood.title =="Depressed")
+        else if(mood.title =="Disgusted")
+        {
+            mImageView?.setImageResource(R.drawable.ic_disgusted)
+        }
+        else if(mood.title =="Fearful")
+        {
+            mImageView?.setImageResource(R.drawable.ic_panic)
+        }
+
+        else if(mood.title =="Bad")
         {
             mImageView?.setImageResource(R.drawable.ic_stress)
         }
@@ -80,11 +89,11 @@ class DisorderViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
         }
         else if(mood.title =="Scared")
         {
-            mImageView?.setImageResource(R.drawable.ic_panic)
+
         }
-        else if(mood.title =="Moderate")
+        else if(mood.title =="Surprised")
         {
-            mImageView?.setImageResource(R.drawable.ic_normal)
+            mImageView?.setImageResource(R.drawable.ic_suprised)
         }
         else
         {

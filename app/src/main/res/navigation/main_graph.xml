@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/itemFragment2"
         android:name="com.example.mentalhealthapp.HomeFragment"
-        android:label="ItemFragment" >
+        android:label="Home">
         <action
             android:id="@+id/action_itemFragment2_to_searchFragment"
             app:destination="@id/searchFragment" />
@@ -20,7 +20,7 @@
             app:destination="@id/statisticsFragment" />
         <action
             android:id="@+id/action_itemFragment2_to_detailsFragment2"
-            app:destination="@id/detailsFragment2" >
+            app:destination="@id/detailsFragment2">
             <argument
                 android:name="titleargs"
                 app:argType="string"
@@ -31,23 +31,23 @@
     <fragment
         android:id="@+id/searchFragment"
         android:name="com.example.mentalhealthapp.SearchFragment"
-        android:label="fragment_search"
+        android:label="Search"
         tools:layout="@layout/fragment_search" />
     <fragment
         android:id="@+id/statisticsFragment"
         android:name="com.example.mentalhealthapp.StatisticsFragment"
-        android:label="fragment_statistics"
+        android:label="Statistics"
         tools:layout="@layout/fragment_statistics" />
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.example.mentalhealthapp.ProfileFragment"
-        android:label="fragment_profile"
+        android:label="Profile"
         tools:layout="@layout/fragment_profile" />
     <fragment
         android:id="@+id/detailsFragment2"
         android:name="com.example.mentalhealthapp.DetailsFragment"
-        android:label="fragment_details"
-        tools:layout="@layout/fragment_details" >
+        android:label="Details"
+        tools:layout="@layout/fragment_details">
         <argument
             android:name="titleargs"
             app:argType="string"

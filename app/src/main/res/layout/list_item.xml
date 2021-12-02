@@ -8,9 +8,11 @@
     android:layout_margin="8dp"
     android:padding="8dp">
         <RelativeLayout
+            android:layout_marginLeft="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <ImageView
+                android:padding="5dp"
                 android:id="@+id/img_holder"
                 android:layout_width="100dp"
                 android:src="@drawable/ic_anxiety"

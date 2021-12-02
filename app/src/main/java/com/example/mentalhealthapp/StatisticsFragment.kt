@@ -76,7 +76,7 @@ class StatisticsFragment : Fragment() {
     {
         val moodDataBase=MoodDatabase.getInstance(view.context)
         val moodDao:MoodDao=moodDataBase.moodDao
-         var allMoods:ArrayList<Mood>?=null
+        var allMoods:ArrayList<Mood>?=null
         var pastMoods:ArrayList<Mood> = ArrayList()
         var count:Int=0
         moodDao.getAllMood().observe(requireActivity(), Observer {
@@ -84,7 +84,7 @@ class StatisticsFragment : Fragment() {
           {
               pastMoods.add(item)
               count++
-              if(count ==7)
+              if(count ==5)
               {
                   break
               }
@@ -112,7 +112,7 @@ class StatisticsFragment : Fragment() {
             chart.getAxisLeft().setTextColor(Color.BLACK)
             chart.getXAxis().setTextColor(Color.BLACK)
             chart.getXAxis().setAxisMinimum(1f)
-            chart.getXAxis().setAxisMaximum(7f)
+            chart.getXAxis().setAxisMaximum(12f)
             chart.getLegend().setEnabled(true)
             chart.getAxisLeft().setDrawGridLines(false)
             chart.getAxisRight().setDrawGridLines(false)
@@ -122,8 +122,8 @@ class StatisticsFragment : Fragment() {
             xAxis.disableAxisLineDashedLine()
             xAxis.setDrawLabels(true)
 
-            //val weekdays = arrayOf("Sun", "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat")
-            val mood=arrayOf("Depressed","Sad","Angry","Scared","Moderate","Happy")
+            //val mood = arrayOf("Sun", "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat")
+           val mood=arrayOf("Sad","Sad", "Disgusted", "Angry", "Fearful", "Bad", "Surprised","Happy")
 
             yAxis.valueFormatter=IndexAxisValueFormatter(mood)
 

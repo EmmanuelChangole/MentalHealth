@@ -2,6 +2,9 @@ package com.example.mentalhealthapp
 
 import android.app.AlertDialog
 import android.app.NotificationManager
+import android.content.Context
+import android.graphics.*
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.*
 import android.widget.SeekBar
@@ -11,6 +14,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -27,6 +31,10 @@ import com.example.mentalhealthapp.viewmodel.MoodViewModel
 import com.example.mentalhealthapp.viewmodel.MoodViewModelFactory
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.android.synthetic.main.fragment_item_list.*
+import com.google.android.material.snackbar.Snackbar
+
+
+
 
 /**
  * A fragment representing a list of Items.
@@ -43,7 +51,9 @@ class HomeFragment : Fragment() ,SeekBar.OnSeekBarChangeListener{
     private var mCurrentMood=0
     private var mCurrentMoodIntensity=1
     val moods= arrayOf<String>(  // Depressed = 1, Sad = 2, Angry = 3, Scared = 4, Moderate = 5, Happy = 6
-        "Depressed", "Sad", "Angry", "Scared", "Moderate", "Happy")
+        "Sad", "Disgusted", "Angry", "Fearful", "Bad", "Surprised","Happy")
+
+
 
 
 
@@ -66,6 +76,12 @@ class HomeFragment : Fragment() ,SeekBar.OnSeekBarChangeListener{
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         //navigate to the Fragment that has the same id as the selected menu item
+        if(item.itemId ==R.id.deleteAll)
+        {
+            moodViewModel.deleteAll()
+            Toast.makeText(context,"Mood deleted",Toast.LENGTH_LONG).show()
+        }
+
         return NavigationUI.
         onNavDestinationSelected(item,requireView().findNavController())
                 || super.onOptionsItemSelected(item)
@@ -83,7 +99,6 @@ class HomeFragment : Fragment() ,SeekBar.OnSeekBarChangeListener{
            // Toast.makeText(this.context,"Whats on your mind? not yet implemented",Toast.LENGTH_SHORT).show()
         })
         val application = requireNotNull(this.activity).application
-
          /*   val dataSource = DisorderDatabase.getInstance(application).disorderDatabaseDao
         val viewModelFactory = DisorderViewModelFactory(dataSource, application)
          disorderViewModel = ViewModelProvider(
@@ -108,11 +123,6 @@ class HomeFragment : Fragment() ,SeekBar.OnSeekBarChangeListener{
             }
 
         })
-
-
-
-
-
 
         return   binding.root;
 
@@ -140,6 +150,7 @@ class HomeFragment : Fragment() ,SeekBar.OnSeekBarChangeListener{
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         (activity as AppCompatActivity?)!!.supportActionBar?.title="Home"
+
         myItemRecyclerViewAdapter=MyItemRecyclerViewAdapter();
         list_recycler_view.apply{
             layoutManager = LinearLayoutManager(activity)
@@ -165,13 +176,20 @@ class HomeFragment : Fragment() ,SeekBar.OnSeekBarChangeListener{
         })
 
 
-        var itemTouchHelperCallback=setUpTouchHelper();
+        var itemTouchHelperCallback=setUpTouchHelper(requireActivity())
         var itemTouchHelper=ItemTouchHelper(itemTouchHelperCallback)
          itemTouchHelper.attachToRecyclerView(list_recycler_view)
 
     }
 
-    private fun setUpTouchHelper(): ItemTouchHelper.Callback {
+    private fun setUpTouchHelper(context:Context): ItemTouchHelper.Callback {
+         var deleteIcon=ContextCompat.getDrawable(context, R.drawable.ic_delete_24)
+         val intrinsicWidth = deleteIcon?.intrinsicWidth
+         val intrinsicHeight = deleteIcon?.intrinsicHeight
+         val background = ColorDrawable()
+         val backgroundColor = Color.parseColor("#f44336")
+         val clearPaint = Paint().apply { xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR) }
+
         val itemTouchHelperCallback = object: ItemTouchHelper.Callback() {
             override fun getMovementFlags(
                 recyclerView: RecyclerView,
@@ -181,6 +199,58 @@ class HomeFragment : Fragment() ,SeekBar.OnSeekBarChangeListener{
                 val dragFlags = ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
                 val dragFlag=ItemTouchHelper.UP or ItemTouchHelper.DOWN
                 return makeMovementFlags(dragFlag, dragFlags)
+            }
+
+            override fun onChildDraw(
+                c: Canvas,
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                dX: Float,
+                dY: Float,
+                actionState: Int,
+                isCurrentlyActive: Boolean
+            ) {
+
+                val itemView = viewHolder.itemView
+                val itemHeight = itemView.bottom - itemView.top
+                val isCanceled = dX == 0f && !isCurrentlyActive
+                if (isCanceled) {
+                    clearCanvas(c, itemView.right + dX, itemView.top.toFloat(), itemView.right.toFloat(), itemView.bottom.toFloat())
+                    super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
+                    return
+                }
+
+                // Draw the red delete background
+                background.color = backgroundColor
+                background.setBounds(itemView.right + dX.toInt(), itemView.top, itemView.right, itemView.bottom)
+                background.draw(c)
+
+                // Calculate position of delete icon
+                val deleteIconTop = itemView.top + (itemHeight - intrinsicHeight!!) / 2
+                val deleteIconMargin = (itemHeight - intrinsicHeight) / 2
+                val deleteIconLeft = itemView.right - deleteIconMargin - intrinsicWidth!!
+                val deleteIconRight = itemView.right - deleteIconMargin
+                val deleteIconBottom = deleteIconTop + intrinsicHeight
+
+                // Draw the delete icon
+                deleteIcon!!.setBounds(deleteIconLeft, deleteIconTop, deleteIconRight, deleteIconBottom)
+                deleteIcon.draw(c)
+
+
+
+                super.onChildDraw(
+                    c,
+                    recyclerView,
+                    viewHolder,
+                    dX,
+                    dY,
+                    actionState,
+                    isCurrentlyActive
+                )
+            }
+
+            private fun clearCanvas(c: Canvas?, left: Float, top: Float, right: Float, bottom: Float) {
+                c?.drawRect(left, top, right, bottom, clearPaint)
             }
 
             override fun onMove(
@@ -204,7 +274,7 @@ class HomeFragment : Fragment() ,SeekBar.OnSeekBarChangeListener{
                 val position=viewHolder.absoluteAdapterPosition
                 val currentMood=myItemRecyclerViewAdapter.get_Item(position)
                 moodViewModel.deleteMood(currentMood)
-                myItemRecyclerViewAdapter.notifyItemRemoved(position)
+             //   myItemRecyclerViewAdapter.notifyItemRemoved(position)
 
             }
 
@@ -228,13 +298,14 @@ class HomeFragment : Fragment() ,SeekBar.OnSeekBarChangeListener{
        return itemTouchHelperCallback
     }
 
+
+
+
     fun showCurrentMood()
     {
-
-
         val alertDialogBuilder : AlertDialog.Builder= AlertDialog.Builder(getActivity(),R.style.DarkAlertDialog)
         alertDialogBuilder.setTitle("How are you feeling Now?")
-        alertDialogBuilder.setSingleChoiceItems(moods,0,{_,which->mCurrentMood = which  })
+        alertDialogBuilder.setSingleChoiceItems(moods,mCurrentMood,{_,which->mCurrentMood = which  })
         alertDialogBuilder.setPositiveButton("Next",{_,which->showIntenstyDialog()})
         alertDialogBuilder.show()
     }
@@ -242,7 +313,7 @@ class HomeFragment : Fragment() ,SeekBar.OnSeekBarChangeListener{
     {
         val builder : AlertDialog.Builder= AlertDialog.Builder(getActivity(),R.style.DarkAlertDialog)
         val seekBar: SeekBar = SeekBar(getActivity())
-        seekBar.max=4
+        seekBar.max=10
         seekBar.setOnSeekBarChangeListener(this);
         builder.setTitle("How is Intense the feeling?")
         builder.setView(seekBar)

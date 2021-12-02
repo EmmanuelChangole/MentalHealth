@@ -27,8 +27,8 @@
     <fragment
         android:id="@+id/itemFragment"
         android:name="com.example.mentalhealthapp.HomeFragment"
-        android:label="fragment_item_list"
-        tools:layout="@layout/fragment_item_list" >
+        android:label="Home"
+        tools:layout="@layout/fragment_item_list">
         <action
             android:id="@+id/action_itemFragment_to_detailsFragment"
             app:destination="@id/detailsFragment" />
@@ -36,15 +36,15 @@
     <fragment
         android:id="@+id/detailsFragment"
         android:name="com.example.mentalhealthapp.DetailsFragment"
-        android:label="fragment_details"
+        android:label="Details"
         tools:layout="@layout/fragment_details" />
     <fragment
         android:id="@+id/errorFragment"
         android:name="com.example.mentalhealthapp.ErrorFragment"
-        android:label="fragment_error"
+        android:label="Error"
         tools:layout="@layout/fragment_error" />
     <fragment
         android:id="@+id/aboutFragment"
         android:name="com.example.mentalhealthapp.AboutFragment"
-        android:label="AboutFragment" />
+        android:label="About" />
 </navigation>

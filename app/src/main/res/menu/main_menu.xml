@@ -4,8 +4,8 @@
 
     <item
         app:showAsAction="never"
-        android:id="@+id/aboutFragment"
-        android:title="@string/about"
+        android:id="@+id/deleteAll"
+        android:title="Delete All"
 
         />
 

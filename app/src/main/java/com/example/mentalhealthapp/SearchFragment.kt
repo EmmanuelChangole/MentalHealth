@@ -1,6 +1,9 @@
 package com.example.mentalhealthapp
 
+import android.annotation.SuppressLint
 import android.app.Activity
+import android.app.Dialog
+import android.content.DialogInterface
 import android.content.pm.PackageManager
 import android.net.http.SslError
 import android.os.Bundle
@@ -9,6 +12,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.Window
 import android.webkit.*
 import android.widget.SearchView
 import android.widget.TextView
@@ -21,6 +25,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mentalhealthapp.data.model.User
 import com.example.mentalhealthapp.receiver.UserViewHolder
+import com.firebase.ui.auth.AuthUI.getApplicationContext
 import com.firebase.ui.database.FirebaseRecyclerAdapter
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -28,6 +33,13 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.mrtyvz.archedimageprogress.ArchedImageProgressBar
 import com.firebase.ui.database.FirebaseRecyclerOptions
+import android.content.Intent
+import android.net.Uri
+import com.bumptech.glide.Glide
+import com.google.firebase.storage.FirebaseStorage
+import de.hdodenhof.circleimageview.CircleImageView
+import kotlinx.android.synthetic.main.dialog_view.*
+import java.io.File
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -143,7 +155,7 @@ class SearchFragment : Fragment() {
         tvSearch=view.findViewById(R.id.tvSearch)
 
         val customTextArcProgress=view.findViewById<ArchedImageProgressBar>(R.id.linkedin_progressBar)
-        searchView.queryHint="type your mental illness"
+        searchView.queryHint="type your mental illness. i.e Dissociative disorder"
         searchView.setOnQueryTextListener(object :SearchView.OnQueryTextListener
         {
             override fun onQueryTextSubmit(query: String?): Boolean
@@ -216,6 +228,7 @@ class SearchFragment : Fragment() {
     {
         val mRef = FirebaseDatabase.getInstance("https://decent-envoy-323808-default-rtdb.firebaseio.com/")
                 .getReference("therapist")
+        mRef.keepSynced(true)
         val query= mRef.orderByChild("specialist").startAt(search_query).endAt(search_query+"\uf8ff")
         val options: FirebaseRecyclerOptions<User> = FirebaseRecyclerOptions.Builder<User>()
             .setQuery(query, User::class.java)
@@ -228,12 +241,51 @@ class SearchFragment : Fragment() {
                 return UserViewHolder(view)
             }
 
+            @SuppressLint("UseRequireInsteadOfGet")
             override fun onBindViewHolder(holder: UserViewHolder, position: Int, model: User)
             {
                 holder.bind(model,context?.applicationContext)
                 holder.itemView.setOnClickListener(){
                         view : View ->
-                   Toast.makeText(context?.applicationContext,model.toString(),Toast.LENGTH_LONG).show()
+                    var dialog:Dialog= Dialog(activity!!)
+                    dialog.setCancelable(true)
+                    dialog.setContentView(R.layout.dialog_view)
+
+
+                    val tvUserName=dialog.findViewById<TextView>(R.id.tvUserName)
+                    val tvgender=dialog.findViewById<TextView>(R.id.tvGender)
+                    val tvSpecialist=dialog.findViewById<TextView>(R.id.tvSpecialist)
+                    val tvAccess=dialog.findViewById<TextView>(R.id.tvAccess)
+                    val tvContact=dialog.findViewById<TextView>(R.id.tvContact)
+                    val imgProfile=dialog.findViewById<CircleImageView>(R.id.imgProfile)
+
+                    tvUserName.setText(model.username)
+                    tvgender.setText(model.gender)
+                    tvSpecialist.setText(model.specialist)
+                    tvAccess.setText(model.access)
+
+                    Glide.with(context?.applicationContext!!)
+                        .load(model.imageUrl)
+                        .placeholder(R.drawable.ic_person)
+                        .into(imgProfile)
+                    tvContact.setOnClickListener {
+                        if(model.access!!.contains("@"))
+                        {
+                            val intent = Intent(Intent.ACTION_SENDTO)
+                            intent.setData(Uri.parse("mailto:" +model.access))
+                            startActivity(intent)
+                            dialog.dismiss()
+                        }
+                        else
+                        {
+
+                            val intent = Intent(Intent.ACTION_DIAL)
+                            intent.data = Uri.parse("tel:${model.access}")
+                            startActivity(intent)
+                            dialog.dismiss()
+                        }
+                    }
+                    dialog.show()
                 }
             }
 
@@ -241,7 +293,7 @@ class SearchFragment : Fragment() {
                 super.onDataChanged()
                 if(itemCount ==0)
                 {
-                    tvSearch.setText("Oops! Therapist not found.")
+                    tvSearch.setText("No therapist is available at this time, please try searching later")
                     tvSearch.visibility= View.VISIBLE
 
                 }

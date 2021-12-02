@@ -38,13 +38,19 @@ class LoginActivity : AppIntro() {
     override fun onSkipPressed(currentFragment: Fragment?) {
         super.onSkipPressed(currentFragment)
         // Decide what to do when the user clicks on "Skip"
-       launchSignInFLow()
+        var intent:Intent=Intent(this,CompleteLogin::class.java);
+        startActivity(intent);
+        finish();
+      // launchSignInFLow()
     }
 
     override fun onDonePressed(currentFragment: Fragment?) {
         super.onDonePressed(currentFragment)
         // Decide what to do when the user clicks on "Done"
-        launchSignInFLow()
+        var intent:Intent=Intent(this,CompleteLogin::class.java);
+        startActivity(intent);
+        finish();
+        //launchSignInFLow()
     }
 
     private fun launchSignInFLow() {
