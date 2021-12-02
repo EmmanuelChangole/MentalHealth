@@ -50,4 +50,5 @@
     <string name="tvprofile">Edit Profile</string>
     <string name="search">Search</string>
     <string name="search_hint">Search for therapist by typing your mental illness</string>
+    <string name="full_name">Full Name</string>
 </resources>

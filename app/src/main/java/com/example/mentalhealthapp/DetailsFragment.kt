@@ -92,6 +92,7 @@ class DetailsFragment : Fragment() {
                 val mUrl="https://www.helpguide.org/?x=0&y=0&s=${title}"
                 val doc: org.jsoup.nodes.Document = Jsoup.connect(mUrl).get()
                 doc.getElementsByClass("banner").remove()
+                doc.getElementById("donate-banner").remove()
                 doc.getElementsByClass("content-info").remove()
                 doc.getElementById("sub-footer").remove()
                 doc.getElementsByClass("search-results-pagination").remove()

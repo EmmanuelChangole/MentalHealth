@@ -30,27 +30,15 @@ class UserViewHolder(inflater: View):
 
         mTitleView?.text = user.username
         mYearView?.text = user.specialist
-        val storageRef = FirebaseStorage.getInstance().getReference()
-        val pathStrorage=storageRef.child("images/${user.imageUrl}")
-        val ONE_MEGABYTE: Long = 1024 * 1024
-        if(pathStrorage!=null)
-        {
-            pathStrorage.getBytes(ONE_MEGABYTE).addOnSuccessListener {
-                if (context != null) {
-                    mImageView?.let { it1 ->
-                        Glide.with(context)
-                            .load(it)
-                            .placeholder(R.drawable.ic_person)
-                            .into(it1)
-                    }
-                }
-
+        mImageView?.let {
+            if (context != null) {
+                Glide.with(context)
+                    .load(user.imageUrl)
+                    .placeholder(R.drawable.ic_person)
+                    .into(it)
 
             }
         }
-
-
-
 
 
     }

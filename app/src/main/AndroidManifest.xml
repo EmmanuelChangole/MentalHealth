@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:dist="http://schemas.android.com/apk/distribution"
     package="com.example.mentalhealthapp">
-  <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-  <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-  <uses-permission android:name="android.permission.INTERNET"/>
 
+    <dist:module dist:instant="true" />
+
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
+        android:name=".utils.MyFirebase"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -14,12 +18,16 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MentalHealthApp">
         <activity
-            android:name=".LoginActivity" android:theme="@style/Theme.MentalHealthApp"
-            android:exported="true" />
-      
+            android:name=".CompleteLogin"
+            android:exported="false" />
         <activity
-            android:name=".MainActivity" android:theme="@style/Theme.MentalHealthApp"
-            android:exported="true">
+            android:name=".LoginActivity"
+            android:exported="true"
+            android:theme="@style/Theme.MentalHealthApp" />
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:theme="@style/Theme.MentalHealthApp">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

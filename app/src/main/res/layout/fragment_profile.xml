@@ -1,135 +1,108 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ProfileFragment">
-
-    <RelativeLayout
+    android:background="@color/grey"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
-        <androidx.cardview.widget.CardView
-            android:id="@+id/cv"
-            android:layout_centerInParent="true"
-            android:layout_width="300dp"
-            android:layout_height="300dp"
-            app:cardCornerRadius="6dp"
-            android:elevation="3dp"
-            app:cardUseCompatPadding="true">
-
-            <LinearLayout
+        <LinearLayout
+            android:layout_marginTop="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="15dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@color/grey"
+            android:orientation="vertical">
+            <RelativeLayout
+                android:id="@+id/background"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                >
-                <ProgressBar
-                    style="?android:attr/progressBarStyleHorizontal"
-                    android:layout_width="match_parent"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp"
-                    android:layout_height="17dp"
-                    tools:layout_editor_absoluteX="0dp"
-                    tools:layout_editor_absoluteY="0dp"
-                    android:id="@+id/progressBar2"
-                    android:layout_alignParentTop="true" />
-
-                <!--text view login and view design-->
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="45dp"
-                    style="@style/marginTop">
-
-                    <View
-                        android:layout_width="8dp"
-                        android:layout_height="match_parent"
-                        android:layout_alignParentStart="true"
-                        android:layout_alignParentLeft="true"
-                        android:background="@color/colorGreen"
-
-                        />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginStart="50dp"
-                        android:layout_marginLeft="50dp"
-                        android:textColor="@color/colorYellow"
-                        android:text="@string/tvprofile"
-                        android:textAppearance="@style/AndroidTextAppearance"
-                        />
-
-                </RelativeLayout>
-                <!--edit text userName design-->
-                <RelativeLayout
-                    android:padding="5dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <de.hdodenhof.circleimageview.CircleImageView
-                        xmlns:app="http://schemas.android.com/apk/res-auto"
-                        android:id="@+id/profile_image"
-                        android:layout_width="100dp"
-                        android:layout_height="100dp"
-                        android:layout_centerHorizontal="true"
-                        android:padding="5dp"
-                        android:src="@drawable/ic_profile"
-                        app:civ_border_color="@color/light_blue"
-                        app:civ_border_width="2dp" />
-
-
-                </RelativeLayout>
-
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:orientation="horizontal"
+                android:layout_height="200dp"
+                android:background="@drawable/profile_background">
+                <ImageView
+                    android:id="@+id/butUpdate"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="25dp"
+                    android:src="@drawable/ic_done" />
+                <ImageView
+                    android:layout_below="@id/butUpdate"
+                    android:id="@+id/butRemove"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
                     android:layout_marginTop="10dp"
+                    android:layout_marginRight="25dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:src="@drawable/ic_remove" />
+            </RelativeLayout>
+            <LinearLayout
+                android:id="@+id/liner_profileimage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/background"
+                android:layout_marginLeft="20dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="-100dp"
+                android:orientation="horizontal"
+                >
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/profile_image"
+                    android:layout_width="150dp"
+                    app:civ_border_color="@color/light_blue"
+                    app:civ_border_width="1dp"
+                    android:layout_height="150dp"
+                    android:src="@drawable/ic_profile" >
 
-                    style="@style/margin">
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        >
-                        <EditText
-                            android:id="@+id/edUsername"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:hint="@string/hintUserName"
-                            android:background="@null"
-                            style="@style/paddingBottom" />
-
-                    </com.google.android.material.textfield.TextInputLayout>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:layout_marginTop="15dp"
-                    android:layout_marginBottom="10dp"
-
-                    >
-                    <Button
-                        android:background="@color/colorGreen"
-                        android:id="@+id/butUpdate"
-                        android:layout_width="100dp"
-                        android:layout_height="60dp"
-                        android:textColor="@color/colorWhite"
-                        android:text="@string/butDone"
-                        />
-
-
-
-                </LinearLayout>
+                </de.hdodenhof.circleimageview.CircleImageView>
 
             </LinearLayout>
-        </androidx.cardview.widget.CardView>
+            <LinearLayout
+                android:padding="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/liner_profileimage"
+                android:layout_marginTop="5dp"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:paddingLeft="15dp"
+                    android:text="Full Name" />
+                <EditText
+                    android:id="@+id/edUsername"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:background="@drawable/edittext_rounder_courner"
+                    android:hint="@string/full_name"
+                    android:inputType="text"
+                    android:maxLength="30"
+                    android:paddingLeft="15dp" />
 
 
-    </RelativeLayout>
+            </LinearLayout>
 
 
-</FrameLayout>
+            <com.mrtyvz.archedimageprogress.ArchedImageProgressBar
+                android:layout_gravity="center"
+                android:layout_centerInParent="true"
+                android:id="@+id/linkedin_progressBar"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_marginBottom="8dp"
+                android:tooltipText="@string/prompt_email"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+              />
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>

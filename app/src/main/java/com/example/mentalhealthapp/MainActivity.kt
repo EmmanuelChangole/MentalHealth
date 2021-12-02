@@ -6,10 +6,13 @@ import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Gravity
 import android.view.View
 import android.widget.ImageView
 import android.widget.SeekBar
 import android.widget.TextView
+import android.widget.Toast
+import androidx.core.view.GravityCompat
 import androidx.databinding.DataBindingUtil
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.ViewModelProvider
@@ -32,6 +35,9 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
 import de.hdodenhof.circleimageview.CircleImageView
+import android.content.DialogInterface
+import androidx.core.os.bundleOf
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 
 
 class MainActivity : AppCompatActivity(), SeekBar.OnSeekBarChangeListener {
@@ -67,6 +73,67 @@ class MainActivity : AppCompatActivity(), SeekBar.OnSeekBarChangeListener {
         NavigationUI.setupActionBarWithNavController(this,navController, drawerLayout)
         NavigationUI.setupWithNavController(binding.navView, navController)
         NavigationUI.setupWithNavController(bottom_nav,navController)
+        navigationView.setNavigationItemSelectedListener{menuItem->
+            when(menuItem.itemId) {
+                R.id.about_us -> {
+                    AlertDialog.Builder(this)
+                        .setTitle("About us")
+                        .setMessage("We are mental wellness app version 1.0. Are you struggling with mental health issues? Worry no more because we got you.")
+                        .setNegativeButton(android.R.string.no, null)
+                        .show()
+                    if(drawerLayout.isDrawerOpen(GravityCompat.START))
+                    {
+                        drawerLayout.closeDrawer(GravityCompat.START)
+                    }
+                    true
+                }
+
+                R.id.contact_us->
+                {
+                    AlertDialog.Builder(this)
+                        .setTitle("Contacts us")
+                        .setMessage("For any inquiries,please email us.")
+                        .setNegativeButton(android.R.string.no, null)
+                        .setPositiveButton("email") { dialog,
+                                                      which ->
+                            val intent = Intent(Intent.ACTION_SENDTO)
+                            intent.setData(Uri.parse("mailto:" +"manuchangole@gmail.com"))
+                            startActivity(intent)
+                        }
+                        .show()
+                    if(drawerLayout.isDrawerOpen(GravityCompat.START))
+                    {
+                        drawerLayout.closeDrawer(GravityCompat.START)
+                    }
+                    true
+
+                }
+                R.id.tips->
+                {
+                    val bundle= bundleOf("title" to  "mind")
+                   // this.findNavController().navigate(R.id.action_itemFragment2_to_detailsFragment2,bundle)
+                    navController.navigate(R.id.detailsFragment2,bundle)
+                    if(drawerLayout.isDrawerOpen(GravityCompat.START))
+                    {
+                        drawerLayout.closeDrawer(GravityCompat.START)
+                    }
+                    true
+
+                }
+                else ->
+                {
+                    if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+                        drawerLayout.closeDrawer(GravityCompat.START)
+                    }
+
+                    false
+
+                }
+            }
+
+
+        }
+
         //setupBottomNavigation()
 
     }
@@ -92,17 +159,19 @@ class MainActivity : AppCompatActivity(), SeekBar.OnSeekBarChangeListener {
     override fun onSupportNavigateUp(): Boolean {
         val navController = this.findNavController(R.id.nav_host_fragment)
         return NavigationUI.navigateUp(navController, drawerLayout)
-        return true
+
     }
 
 
 
-    private fun checkUser() {
+
+    public  fun checkUser() {
 
         val user = FirebaseAuth.getInstance().currentUser
         if (user != null)
         {
             val mRef = FirebaseDatabase.getInstance("https://decent-envoy-323808-default-rtdb.firebaseio.com/").getReference("users").child(user.uid)
+            mRef.keepSynced(true)
             val eventListener: ValueEventListener =object : ValueEventListener
             {
                 @SuppressLint("RestrictedApi")
@@ -112,24 +181,11 @@ class MainActivity : AppCompatActivity(), SeekBar.OnSeekBarChangeListener {
                     {
                         var user = snapshot.getValue(User::class.java)
                         tvProfileName.setText(user!!.username)
-
-                        val storageRef = FirebaseStorage.getInstance().getReference()
-                        filename=FirebaseAuth.getInstance().currentUser!!.uid.toString()+ ".jpg"
-                        val pathStrorage=storageRef.child("images/$filename")
-                        val ONE_MEGABYTE: Long = 1024 * 1024
-                        if(pathStrorage!=null)
-                        {
-                            pathStrorage.getBytes(ONE_MEGABYTE).addOnSuccessListener {
-                               Glide.with(this@MainActivity)
-                                   .load(it)
-                                   .placeholder(R.drawable.ic_person)
-                                   .into(imgVeiew)
-
-
-                            }
-                        }
-
-
+                        Glide.with(this@MainActivity)
+                            .load(user.imageURL)
+                            .diskCacheStrategy(DiskCacheStrategy.ALL)
+                            .placeholder(R.drawable.ic_person)
+                            .into(imgVeiew)
 
                     }
 
@@ -154,7 +210,6 @@ class MainActivity : AppCompatActivity(), SeekBar.OnSeekBarChangeListener {
 
     fun showCurrentMood()
     {
-
 
         val alertDialogBuilder : AlertDialog.Builder= AlertDialog.Builder(this,R.style.DarkAlertDialog)
         alertDialogBuilder.setTitle("How are you feeling Now?")
@@ -208,5 +263,16 @@ class MainActivity : AppCompatActivity(), SeekBar.OnSeekBarChangeListener {
 
     }
 
+    companion object {
+      fun checkUser()
+      {
+
+
+
+      }
+    }
+
 
 }
+
+
