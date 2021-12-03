@@ -16,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
@@ -52,7 +53,7 @@ class HomeFragment : Fragment() ,SeekBar.OnSeekBarChangeListener{
     private var mCurrentMoodIntensity=1
     val moods= arrayOf<String>(  // Depressed = 1, Sad = 2, Angry = 3, Scared = 4, Moderate = 5, Happy = 6
         "Sad", "Disgusted", "Angry", "Fearful", "Bad", "Surprised","Happy")
-
+   private var isEmpty=false
 
 
 
@@ -78,8 +79,16 @@ class HomeFragment : Fragment() ,SeekBar.OnSeekBarChangeListener{
         //navigate to the Fragment that has the same id as the selected menu item
         if(item.itemId ==R.id.deleteAll)
         {
-            moodViewModel.deleteAll()
-            Toast.makeText(context,"Mood deleted",Toast.LENGTH_LONG).show()
+          if(!isEmpty)
+          {
+              moodViewModel.deleteAll()
+              Toast.makeText(context,"Moods deleted",Toast.LENGTH_LONG).show()
+
+          }
+            else{
+              Toast.makeText(context,"No moods to delete",Toast.LENGTH_LONG).show()
+            }
+
         }
 
         return NavigationUI.
@@ -120,6 +129,7 @@ class HomeFragment : Fragment() ,SeekBar.OnSeekBarChangeListener{
             {
                 val tvDetails:TextView=binding.tvError
                 tvDetails.visibility=View.VISIBLE
+                isEmpty=true
             }
 
         })
@@ -162,12 +172,14 @@ class HomeFragment : Fragment() ,SeekBar.OnSeekBarChangeListener{
             {
                 val tvDetails:TextView=view.findViewById(R.id.tvError);
                 tvDetails.visibility=View.VISIBLE;
+                isEmpty=true
 
             }
             else
             {
                 val tvDetails:TextView=view.findViewById(R.id.tvError);
-                tvDetails.visibility=View.GONE;
+                tvDetails.visibility=View.GONE
+                isEmpty=false
 
             }
           myItemRecyclerViewAdapter.submitList(it)
